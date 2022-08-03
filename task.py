@@ -155,7 +155,7 @@ def max_value():
             # print(stat)
             if int(strmax) >= 10000000:
                 print(stat) 
-                # tweet(stat)
+                tweet(stat)
             else:
                 print("trasantion is smaller than 10000000")
         else:
@@ -189,7 +189,7 @@ def hourly():
         
         news = "Headlines : \n"+headline+"\n" "\nRead More 👇🏻:"+newsurl+"\n"
         print(news)
-        # tweet(news)
+        tweet(news)
     except:
         print("News API is not working properly")
 
@@ -248,7 +248,7 @@ def day():
                     write = f.write(str(i)+",\n")
                     
             
-            # tweet(total)
+            tweet(total)
                     # return total 
 
 
