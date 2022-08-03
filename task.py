@@ -142,28 +142,28 @@ def max_value():
     ran = random.randrange(3600, 7200)
     th.Timer(ran, max_value).start()
     transfer(ran)  
-    try : 
-        if timestamp != []:
-            maxs = max(timestamp)
-            ind = timestamp.index(maxs)
-            strmax = str(maxs)[:-18]
-            com = "{:,}".format(int(strmax))
+#     try : 
+    if timestamp != []:
+        maxs = max(timestamp)
+        ind = timestamp.index(maxs)
+        strmax = str(maxs)[:-18]
+        com = "{:,}".format(int(strmax))
 
-            hashxt = hash[ind]
-            url = "https://etherscan.io/tx/"+hashxt
-            stat = "Whale Alert : {} $SHIB -> transferred to dead wallet. \n{}".format(com,url)
-            # print(stat)
-            if int(strmax) >= 10000000:
-                print(stat) 
-                tweet(stat)
-            else:
-                print("trasantion is smaller than 10000000")
+        hashxt = hash[ind]
+        url = "https://etherscan.io/tx/"+hashxt
+        stat = "Whale Alert : {} $SHIB -> transferred to dead wallet. \n{}".format(com,url)
+        # print(stat)
+        if int(strmax) >= 10000000:
+            print(stat) 
+            tweet(stat)
         else:
-            print("No transfer to Dead wallet in past 2 hours")
+            print("trasantion is smaller than 10000000")
+    else:
+        print("No transfer to Dead wallet in past 2 hours")
 #           
 
-    except:
-        print("Something went wrong...!!! ")
+#     except:
+#         print("Something went wrong...!!! ")
     
 ##################################### NEWS ALERT ##################################
 
@@ -179,19 +179,19 @@ def hourly():
     print(URL)
 
     data = r.json()
-    try :
+#     try :
 
-        headline = data['feed'][0]['title']
-        summary = data['feed'][0]['summary']
-        newsurl = data['feed'][0]['url']
-    
+    headline = data['feed'][0]['title']
+    summary = data['feed'][0]['summary']
+    newsurl = data['feed'][0]['url']
 
-        
-        news = "Headlines : \n"+headline+"\n" "\nRead More 👇🏻:"+newsurl+"\n"
-        print(news)
-        tweet(news)
-    except:
-        print("News API is not working properly")
+
+
+    news = "Headlines : \n"+headline+"\n" "\nRead More 👇🏻:"+newsurl+"\n"
+    print(news)
+    tweet(news)
+#     except:
+#         print("News API is not working properly")
 
       
 ##################################### FIND MAX VALUE OF 24 HOUR TO TWEET ##################################
@@ -207,53 +207,53 @@ def day():
     val = []
     hash1 = []
 
-    try:
-        for i in range(len(data['result'])):
-            # print(i+1)
-            times = datetime.datetime.fromtimestamp(int(data['result'][i]['timeStamp']))
-        
-       
-
-
-            todayt = datetime.datetime.strptime(str(datetime.datetime.today()),'%Y-%m-%d %H:%M:%S.%f')
-
-         
-            deadadd = data['result'][i]['to']
-            if re.findall("^0xdead", deadadd):
-                if (str(times.date())==str(todayt.date())):
-                    asd = data['result'][i]['value'][:-18]
-                    # print(a)
-                    if asd != "":
-                        b = int(asd)
-                        val.append(b)
-
-                        hash1.append(data['result'][i]['hash'])
+#     try:
+    for i in range(len(data['result'])):
+        # print(i+1)
+        times = datetime.datetime.fromtimestamp(int(data['result'][i]['timeStamp']))
 
 
 
 
-
-        sums = sum(val)    
-
-        print(sums)
-    
-        com = "{:,}".format(sums)
-        total = "Burn Alert : In the past few hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
-        print(total)
-        print(val)
-     
-        
-                    
-            
-        tweet(total)
-                    # return total 
+        todayt = datetime.datetime.strptime(str(datetime.datetime.today()),'%Y-%m-%d %H:%M:%S.%f')
 
 
-                
-                
+        deadadd = data['result'][i]['to']
+        if re.findall("^0xdead", deadadd):
+            if (str(times.date())==str(todayt.date())):
+                asd = data['result'][i]['value'][:-18]
+                # print(a)
+                if asd != "":
+                    b = int(asd)
+                    val.append(b)
 
-    except:
-            print("API give errors..!!!")
+                    hash1.append(data['result'][i]['hash'])
+
+
+
+
+
+    sums = sum(val)    
+
+    print(sums)
+
+    com = "{:,}".format(sums)
+    total = "Burn Alert : In the past few hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
+    print(total)
+    print(val)
+
+
+
+
+    tweet(total)
+                # return total 
+
+
+
+
+
+#     except:
+#             print("API give errors..!!!")
 
     
 max_value()
