@@ -198,7 +198,7 @@ def hourly():
 
 def day():
     th.Timer(86400, day).start()  
-    URL = "https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE&page=1&offset=3000&startblock=0&sort=desc&apikey=XYS1Z1DTCPUHEDHCNG8BSBSCHCTYRKNYDC"
+    URL = "https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE&page=1&offset=5000&startblock=0&sort=desc&apikey=XYS1Z1DTCPUHEDHCNG8BSBSCHCTYRKNYDC"
     r = requests.get(url = URL)
     data = r.json()
 
@@ -219,15 +219,15 @@ def day():
 
          
             deadadd = data['result'][i]['to']
-        
-            if (str(times.date())==str(todayt.date())):
-                asd = data['result'][i]['value'][:-18]
-                # print(a)
-                if asd != "":
-                    b = int(asd)
-                    val.append(b)
+            if re.findall("^0xdead", deadadd):
+                if (str(times.date())==str(todayt.date())):
+                    asd = data['result'][i]['value'][:-18]
+                    # print(a)
+                    if asd != "":
+                        b = int(asd)
+                        val.append(b)
 
-                    hash1.append(data['result'][i]['hash'])
+                        hash1.append(data['result'][i]['hash'])
 
 
 
@@ -240,15 +240,12 @@ def day():
         com = "{:,}".format(sums)
         total = "Burn Alert : In the past few hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
         print(total)
+        print(val)
      
-        for i in val:
-            with open('GFG.csv', 'a') as f:
-            
-            # using csv.writer method from CSV package
-                    write = f.write(str(i)+",\n")
+        
                     
             
-            tweet(total)
+        tweet(total)
                     # return total 
 
 
