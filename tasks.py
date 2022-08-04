@@ -151,7 +151,7 @@ def max_value():
 
             hashxt = hash[ind]
             url = "https://etherscan.io/tx/"+hashxt
-            stat = "Whale Alert : {} $SHIB -> transferred to dead wallet. \n{}".format(com,url)
+            stat = "Burn Alert : {} $SHIB -> transferred to dead wallet. \n{}".format(com,url)
             # print(stat)
             if int(strmax) >= 10000000:
                 print(stat) 
