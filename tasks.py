@@ -181,9 +181,9 @@ def hourly():
     data = r.json()
     try :
 
-        headline = data['feed'][0]['title']
-        summary = data['feed'][0]['summary']
-        newsurl = data['feed'][0]['url']
+        headline = data['feed'][1]['title']
+        summary = data['feed'][1]['summary']
+        newsurl = data['feed'][1]['url']
     
 
         
