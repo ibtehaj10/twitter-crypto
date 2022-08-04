@@ -138,10 +138,10 @@ def transfer(secs):
 
 ##################################### FIND MAX VALUE TO TWEET ##################################
 
-def max_value():
+def hourly_burn():
     ran = random.randrange(3600, 7200)
-    th.Timer(ran, max_value).start()
-    transfer(ran)  
+    th.Timer(ran, hourly_burn).start()
+    transfer(84000)  
     try : 
         if timestamp != []:
             maxs = max(timestamp)
@@ -155,9 +155,10 @@ def max_value():
             # print(stat)
             if int(strmax) >= 10000000:
                 print(stat) 
-                tweet(stat)
+                # tweet(stat)
             else:
                 print("trasantion is smaller than 10000000")
+            # print(stat)
         else:
             print("No transfer to Dead wallet in past 2 hours")
 #           
@@ -167,8 +168,8 @@ def max_value():
     
 ##################################### NEWS ALERT ##################################
 
-def hourly():
-    th.Timer(43200, hourly).start()  
+def news_tweet():
+    th.Timer(43200, news_tweet).start()  
     now = datetime.datetime.now() 
   
     before = now - datetime.timedelta(hours= 24)
@@ -181,23 +182,23 @@ def hourly():
     data = r.json()
     try :
 
-        headline = data['feed'][1]['title']
-        summary = data['feed'][1]['summary']
-        newsurl = data['feed'][1]['url']
+        headline = data['feed'][0]['title']
+        summary = data['feed'][0]['summary']
+        newsurl = data['feed'][0]['url']
     
 
         
         news = "Headlines : \n"+headline+"\n" "\nRead More 👇🏻:"+newsurl+"\n"
         print(news)
-        tweet(news)
+        # tweet(news)
     except:
         print("News API is not working properly")
 
       
 ##################################### FIND MAX VALUE OF 24 HOUR TO TWEET ##################################
 
-def day():
-    th.Timer(86400, day).start()  
+def day_burn():
+    th.Timer(86400, day_burn).start()  
     URL = "https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE&page=1&offset=5000&startblock=0&sort=desc&apikey=XYS1Z1DTCPUHEDHCNG8BSBSCHCTYRKNYDC"
     r = requests.get(url = URL)
     data = r.json()
@@ -238,14 +239,14 @@ def day():
         print(sums)
     
         com = "{:,}".format(sums)
-        total = "Burn Alert : In the past few hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
+        total = "Burn Alert : In the past 24 hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
         print(total)
         print(val)
      
         
                     
             
-        tweet(total)
+        # tweet(total)
                     # return total 
 
 
@@ -255,12 +256,102 @@ def day():
     except:
             print("API give errors..!!!")
 
+
+
+def whale():
+    th.Timer(3500, whale).start()  
+    URL = "https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE&page=1&offset=5000&startblock=0&sort=desc&apikey=XYS1Z1DTCPUHEDHCNG8BSBSCHCTYRKNYDC"
+    r = requests.get(url = URL)
+    data = r.json()
+    now = datetime.datetime.now()
+    before = datetime.datetime.now() - datetime.timedelta(seconds=3600)
+
+    # print(now)
+    # print(before)
+
+
+    mins = now.strftime("%H:%M:%S")
+
+    t1 = datetime.datetime.strptime(mins,'%H:%M:%S')
+    nowft = (t1.second + t1.minute*60 + t1.hour*3600)
+
+
+    befmin = before.strftime("%H:%M:%S")
+    t2 = datetime.datetime.strptime(befmin,'%H:%M:%S') 
+
+    beft = (t2.second + t2.minute*60 + t2.hour*3600)
+
+    newtime = nowft - 3600
+
     
-max_value()
+  
+    val = []
+    hash1 = []
 
-hourly()
+    try:  
+        for i in range(len(data['result'])):
+            # print(i+1)
+            times = datetime.datetime.fromtimestamp(int(data['result'][i]['timeStamp']))
+        
+        
+            mins = times.strftime("%H:%M:%S")
+            pt = datetime.datetime.strptime(mins,'%H:%M:%S')
+            todayt = datetime.datetime.strptime(str(datetime.datetime.today()),'%Y-%m-%d %H:%M:%S.%f')
 
-day()
+            
+            
+            time1 = (pt.second + pt.minute*60 + pt.hour*3600)
+            if (time1 >= newtime and time1 <= nowft)and(str(times.date())==str(todayt.date())):
+                asd = data['result'][i]['value'][:-18]
+                # print(a)
+                if asd != "":
+                    b = int(asd)
+                    val.append(b)
+
+                    hash1.append(data['result'][i]['hash'])
+
+
+
+
+
+        sums = max(val)    
+
+        print(sums)
+        ind = val.index(sums)
+        com = "{:,}".format(sums)
+        
+        hashxt = hash1[ind]
+        if sums > 100000000:
+            url = "https://etherscan.io/tx/"+hashxt
+            total = "Whale Alert : $SHIB   {}  transferred. \ncheck details 👇🏻 \n{}".format(com,url)
+            # tweet(total)
+            print(total)
+        else:
+            print("No Whale alert in lsat hour")
+         
+        
+            
+                        
+       
+
+
+                
+                
+
+    except:
+            print("API give errors..!!!")
+
+
+
+    
+hourly_burn()
+
+
+whale()
+
+news_tweet()
+
+day_burn()
 
 
 print("suceess...!!!")
