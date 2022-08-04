@@ -155,7 +155,7 @@ def hourly_burn():
             # print(stat)
             if int(strmax) >= 10000000:
                 print(stat) 
-                # tweet(stat)
+                tweet(stat)
             else:
                 print("trasantion is smaller than 10000000")
             # print(stat)
@@ -190,7 +190,7 @@ def news_tweet():
         
         news = "Headlines : \n"+headline+"\n" "\nRead More 👇🏻:"+newsurl+"\n"
         print(news)
-        # tweet(news)
+        tweet(news)
     except:
         print("News API is not working properly")
 
@@ -241,13 +241,9 @@ def day_burn():
         com = "{:,}".format(sums)
         total = "Burn Alert : In the past 24 hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
         print(total)
-        print(val)
-     
-        
-                    
-            
-        # tweet(total)
-                    # return total 
+        print(val)      
+        tweet(total)
+#                     
 
 
                 
@@ -324,7 +320,7 @@ def whale():
         if sums > 100000000:
             url = "https://etherscan.io/tx/"+hashxt
             total = "Whale Alert : $SHIB   {}  transferred. \ncheck details 👇🏻 \n{}".format(com,url)
-            # tweet(total)
+            tweet(total)
             print(total)
         else:
             print("No Whale alert in lsat hour")
