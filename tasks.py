@@ -151,13 +151,13 @@ def hourly_burn():
 
             hashxt = hash[ind]
             url = "https://etherscan.io/tx/"+hashxt
-            stat = "Burn Alert : {} $SHIB -> transferred to dead wallet. \n{}".format(com,url)
+            stat = "Burn alert 🔥 : {} $SHIB -> transferred to dead wallet. \n{}".format(com,url)
             # print(stat)
-            if int(strmax) >= 10000000:
+            if int(strmax) >= 5000000:
                 print(stat) 
                 tweet(stat)
             else:
-                print("trasantion is smaller than 10000000")
+                print("trasantion is smaller than 5000000")
             # print(stat)
         else:
             print("No transfer to Dead wallet in past 2 hours")
@@ -188,7 +188,7 @@ def news_tweet():
     
 
         
-        news = "Headlines : \n"+headline+"\n" "\nRead More 👇🏻:"+newsurl+"\n"
+        news = "Headline 📰 : \n"+headline+"\n" "\nRead More 👇🏻:"+newsurl+"\n"
         print(news)
         tweet(news)
     except:
@@ -239,7 +239,7 @@ def day_burn():
         print(sums)
     
         com = "{:,}".format(sums)
-        total = "Burn Alert : In the past 24 hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
+        total = "Burn alert 🔥 : In the past 24 hours, there have been more than of {} $SHIB tokens burned  #shibarmy".format(com)
         print(total)
         print(val)      
         tweet(total)
@@ -317,9 +317,9 @@ def whale():
         com = "{:,}".format(sums)
         
         hashxt = hash1[ind]
-        if sums > 100000000:
+        if sums > 50000000000:
             url = "https://etherscan.io/tx/"+hashxt
-            total = "Whale Alert : $SHIB   {}  transferred. \ncheck details 👇🏻 \n{}".format(com,url)
+            total = "Whale alert 🚨: {} $SHIB transferred. \ncheck details 👇🏻 \n{}".format(com,url)
             tweet(total)
             print(total)
         else:
