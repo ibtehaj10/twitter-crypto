@@ -141,7 +141,7 @@ def transfer(secs):
 def hourly_burn():
     ran = random.randrange(3600, 7200)
     th.Timer(ran, hourly_burn).start()
-    transfer(84000)  
+    transfer(ran)  
     try : 
         if timestamp != []:
             maxs = max(timestamp)
